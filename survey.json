@@ -1,0 +1,423 @@
+{
+  "title": "Анкета заказа корпусной мебели",
+  "showProgressBar": "bottom",
+  "pages": [
+    {
+      "name": "room_and_type",
+      "title": "Основные параметры",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "room",
+          "title": "Для какого помещения нужна мебель?",
+          "choices": [
+            { "value": "спальня", "text": "Спальня" },
+            { "value": "прихожая", "text": "Прихожая" },
+            { "value": "гардеробная", "text": "Гардеробная" },
+            { "value": "кухня", "text": "Кухня" },
+            { "value": "гостиная", "text": "Гостиная" }
+          ],
+          "isRequired": true
+        },
+        {
+          "type": "radiogroup",
+          "name": "wardrobe_type",
+          "title": "Какой тип шкафа вам нужен?",
+          "visibleIf": "{room} != 'кухня'",
+          "choices": [
+            { "value": "распашной", "text": "Распашной шкаф (с обычными дверцами)" },
+            { "value": "купе", "text": "Шкаф-купе (с раздвижными дверьми)" },
+            { "value": "угловой", "text": "Угловой шкаф (для экономии места)" }
+          ],
+          "isRequired": true
+        },
+        {
+          "type": "radiogroup",
+          "name": "kitchen_layout",
+          "title": "Какая планировка кухни вам нужна?",
+          "visibleIf": "{room} = 'кухня'",
+          "choices": [
+            { "value": "прямая", "text": "Прямая (вдоль одной стены)" },
+            { "value": "г-образная", "text": "Г-образная (угловая)" },
+            { "value": "п-образная", "text": "П-образная (вдоль трех стен)" },
+            { "value": "с островом", "text": "С островом (отдельный блок по центру)" }
+          ],
+          "isRequired": true
+        },
+        {
+          "type": "panel",
+          "name": "dimensions",
+          "title": "Укажите примерные размеры мебели",
+          "elements": [
+            {
+              "type": "text",
+              "name": "width",
+              "title": "Ширина (см)",
+              "inputType": "number",
+              "defaultValue": 200,
+              "validators": [
+                {
+                  "type": "numeric",
+                  "minValue": 80,
+                  "maxValue": 400
+                }
+              ]
+            },
+            {
+              "type": "text", 
+              "name": "height",
+              "title": "Высота (см)",
+              "inputType": "number",
+              "defaultValue": 220,
+              "validators": [
+                {
+                  "type": "numeric",
+                  "minValue": 180,
+                  "maxValue": 270
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "name": "depth",
+              "title": "Глубина (см)", 
+              "inputType": "number",
+              "defaultValue": 50,
+              "validators": [
+                {
+                  "type": "numeric",
+                  "minValue": 35,
+                  "maxValue": 70
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "wardrobe_details",
+      "title": "Шкаф — наполнение",
+      "visibleIf": "{room} != 'кухня'",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "doors_count",
+          "title": "Сколько дверей/створок должно быть?",
+          "choices": [ "1", "2", "3", "4", "5", "6" ],
+          "isRequired": true
+        },
+        {
+          "type": "checkbox",
+          "name": "wardrobe_internal",
+          "title": "Что должно быть внутри шкафа?",
+          "choices": [
+            { "value": "shelves", "text": "Полки для одежды" },
+            { "value": "drawers", "text": "Выдвижные ящики" },
+            { "value": "rods", "text": "Штанги для вешалок" },
+            { "value": "baskets", "text": "Корзины для белья" },
+            { "value": "shoe_shelves", "text": "Обувные полки" }
+          ],
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "shelves_qty",
+          "title": "Количество полок",
+          "visibleIf": "contains({wardrobe_internal}, 'shelves')",
+          "inputType": "number",
+          "defaultValue": 5,
+          "validators": [
+            {
+              "type": "numeric",
+              "minValue": 1,
+              "maxValue": 20
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "name": "drawers_qty", 
+          "title": "Количество ящиков",
+          "visibleIf": "contains({wardrobe_internal}, 'drawers')",
+          "inputType": "number",
+          "defaultValue": 3,
+          "validators": [
+            {
+              "type": "numeric",
+              "minValue": 1,
+              "maxValue": 10
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "name": "rods_qty",
+          "title": "Количество штанг",
+          "visibleIf": "contains({wardrobe_internal}, 'rods')",
+          "inputType": "number",
+          "defaultValue": 2,
+          "validators": [
+            {
+              "type": "numeric",
+              "minValue": 1,
+              "maxValue": 5
+            }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "name": "wardrobe_additional",
+          "title": "Дополнительные элементы",
+          "choices": [
+            { "value": "mirrors", "text": "Зеркала" },
+            { "value": "mezzanine", "text": "Антресоли (верхние секции)" },
+            { "value": "lighting", "text": "Подсветка" },
+            { "value": "plinth", "text": "Цоколь (ножки внизу)" }
+          ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "mirror_position",
+          "title": "Где расположить зеркала?",
+          "visibleIf": "contains({wardrobe_additional}, 'mirrors')",
+          "choices": [
+            { "value": "doors", "text": "На дверях" },
+            { "value": "inside", "text": "Внутри шкафа" }
+          ]
+        },
+        {
+          "type": "text",
+          "name": "mezzanine_height",
+          "title": "Высота антресолей (см)",
+          "visibleIf": "contains({wardrobe_additional}, 'mezzanine')",
+          "inputType": "number",
+          "defaultValue": 40,
+          "validators": [
+            {
+              "type": "numeric",
+              "minValue": 30,
+              "maxValue": 60
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "name": "plinth_height",
+          "title": "Высота цоколя (см)",
+          "visibleIf": "contains({wardrobe_additional}, 'plinth')",
+          "inputType": "number", 
+          "defaultValue": 12,
+          "validators": [
+            {
+              "type": "numeric",
+              "minValue": 10,
+              "maxValue": 15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "kitchen_details",
+      "title": "Кухня — детали",
+      "visibleIf": "{room} = 'кухня'",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "upper_cabinets",
+          "title": "Нужны ли верхние шкафы?",
+          "choices": [
+            { "value": "yes", "text": "Да" },
+            { "value": "no", "text": "Нет" }
+          ],
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "upper_height",
+          "title": "Высота верхних шкафов (см)",
+          "visibleIf": "{upper_cabinets} = 'yes'",
+          "inputType": "number",
+          "defaultValue": 70,
+          "validators": [
+            {
+              "type": "numeric",
+              "minValue": 60,
+              "maxValue": 90
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "name": "lower_sections",
+          "title": "Сколько нижних секций/тумб нужно?",
+          "inputType": "number",
+          "defaultValue": 4,
+          "validators": [
+            {
+              "type": "numeric",
+              "minValue": 2,
+              "maxValue": 8
+            }
+          ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "worktop_material",
+          "title": "Какую столешницу предпочитаете?",
+          "choices": [
+            { "value": "laminate", "text": "ЛДСП (бюджетный вариант)" },
+            { "value": "mdf", "text": "МДФ (средний класс)" },
+            { "value": "stone", "text": "Искусственный камень (премиум)" }
+          ],
+          "isRequired": true
+        },
+        {
+          "type": "checkbox",
+          "name": "appliances",
+          "title": "Какая техника должна быть встроена?",
+          "choices": [
+            { "value": "oven", "text": "Духовой шкаф" },
+            { "value": "hob", "text": "Варочная поверхность" },
+            { "value": "fridge", "text": "Холодильник" },
+            { "value": "dishwasher", "text": "Посудомоечная машина" },
+            { "value": "microwave", "text": "Микроволновая печь" }
+          ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "hob_type",
+          "title": "Тип варочной поверхности",
+          "visibleIf": "contains({appliances}, 'hob')",
+          "choices": [
+            { "value": "gas", "text": "Газовая" },
+            { "value": "electric", "text": "Электрическая" },
+            { "value": "induction", "text": "Индукционная" }
+          ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "fridge_type",
+          "title": "Тип холодильника",
+          "visibleIf": "contains({appliances}, 'fridge')",
+          "choices": [
+            { "value": "built_in", "text": "Полностью встроенный" },
+            { "value": "free_standing", "text": "Отдельно стоящий" }
+          ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "dishwasher_size",
+          "title": "Ширина посудомоечной машины",
+          "visibleIf": "contains({appliances}, 'dishwasher')",
+          "choices": [
+            { "value": "45", "text": "45 см (узкая)" },
+            { "value": "60", "text": "60 см (стандартная)" }
+          ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "sink_type",
+          "title": "Какая мойка нужна?",
+          "choices": [
+            { "value": "single", "text": "Одинарная" },
+            { "value": "double", "text": "Двойная" },
+            { "value": "corner", "text": "Угловая" }
+          ],
+          "isRequired": true
+        },
+        {
+          "type": "radiogroup",
+          "name": "backsplash_material",
+          "title": "Какой фартук предпочитаете?",
+          "choices": [
+            { "value": "tile", "text": "Керамическая плитка" },
+            { "value": "glass", "text": "Стекло" },
+            { "value": "mdf_panel", "text": "МДФ панели" },
+            { "value": "none", "text": "Не нужен" }
+          ],
+          "isRequired": true
+        }
+      ]
+    },
+    {
+      "name": "budget_and_timeline",
+      "title": "Условия заказа",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "budget",
+          "title": "Каков ваш бюджет?",
+          "choices": [
+            { "value": "under_50k", "text": "До 50 000 ₽" },
+            { "value": "50_100k", "text": "50 000 – 100 000 ₽" },
+            { "value": "100_200k", "text": "100 000 – 200 000 ₽" },
+            { "value": "over_200k", "text": "Свыше 200 000 ₽" }
+          ],
+          "isRequired": true
+        },
+        {
+          "type": "radiogroup",
+          "name": "deadline",
+          "title": "Когда нужна мебель?",
+          "choices": [
+            { "value": "urgent", "text": "Срочно (2–3 недели)" },
+            { "value": "standard", "text": "Стандартные сроки (4–6 недель)" },
+            { "value": "no_hurry", "text": "Не торопимся (7+ недель)" }
+          ],
+          "isRequired": true
+        },
+        {
+          "type": "radiogroup",
+          "name": "style",
+          "title": "Какой стиль предпочитаете?",
+          "choices": [
+            { "value": "modern", "text": "Современный" },
+            { "value": "classic", "text": "Классический" },
+            { "value": "loft", "text": "Лофт" },
+            { "value": "scandi", "text": "Скандинавский" }
+          ],
+          "isRequired": true
+        }
+      ]
+    },
+    {
+      "name": "contacts",
+      "title": "Контактная информация",
+      "elements": [
+        {
+          "type": "text",
+          "name": "customer_name",
+          "title": "Ваше имя",
+          "placeHolder": "Иван",
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "phone",
+          "title": "Телефон",
+          "placeHolder": "+7 900 000-00-00",
+          "inputType": "tel",
+          "isRequired": true,
+          "validators": [
+            {
+              "type": "regex",
+              "text": "Введите корректный номер телефона",
+              "regex": "^\\+?\\d[\\d\\s\\-()]{7,}$"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "name": "email",
+          "title": "Email (необязательно)",
+          "inputType": "email",
+          "placeHolder": "ivan@example.com"
+        }
+      ]
+    }
+  ],
+  "completedHtml": "<div style='max-width: 600px; margin: 0 auto; padding: 20px; text-align: center;'><h2>🎉 Спасибо за заявку!</h2><p style='font-size: 16px; margin: 20px 0;'>Ваши требования к мебели получены и обрабатываются.</p><p style='font-size: 14px; color: #666;'>Наш менеджер свяжется с вами в течение часа для уточнения деталей и расчета стоимости.</p></div>",
+  "showQuestionNumbers": "off"
+}
